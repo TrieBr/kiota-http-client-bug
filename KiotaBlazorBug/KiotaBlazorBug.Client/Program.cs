@@ -5,11 +5,16 @@ using Microsoft.Kiota.Http.HttpClientLibrary;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
-builder.Services.AddSingleton<PetStoreClient>(e =>
+builder.Services.AddScoped<PetStoreClient>(e =>
 {
     var authProvider = new AnonymousAuthenticationProvider();
+
     // Create request adapter using the HttpClient-based implementation
-    var adapter = new HttpClientRequestAdapter(authProvider);
+    HttpClient? httpClient = null;
+    // Uncomment this to crash.
+    // httpClient = KiotaClientFactory.Create();
+    httpClient = new HttpClient();
+    var adapter = new HttpClientRequestAdapter(authProvider, httpClient: httpClient);
     // Create the API client
     return new PetStoreClient(adapter);
 });

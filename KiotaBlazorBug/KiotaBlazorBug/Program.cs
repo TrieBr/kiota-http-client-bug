@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
-builder.Services.AddSingleton<PetStoreClient>(e =>
+builder.Services.AddScoped<PetStoreClient>(e =>
 {
     var authProvider = new AnonymousAuthenticationProvider();
     // Create request adapter using the HttpClient-based implementation
